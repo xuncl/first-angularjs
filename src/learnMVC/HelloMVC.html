@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="myapp" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HelloMVC</title>
+</head>
+
+<body>
+    <h1>controller（嵌套）</h1>
+    <div ng-controller="CommonController">
+        <div ng-controller="HelloAngular">
+            <p>{{greeting.text}},Angular!</p>
+            <button ng-click="test1()">tes-t1</button>
+        </div>
+        <div ng-controller="HelloAngular2">
+            <p>{{greeting.text}},Angular,too!</p>
+            <button ng-click="test2()">test2</button>
+        </div>
+        <div ng-click="commonFn()">common</div>
+    </div>
+    <hr>
+    <h1>model</h1>
+    <div>
+        <!-- hello.text 挂载在根作用域下的 -->
+        <input type="text" ng-model="hello.text">
+        <p>{{hello.text}},Angular</p>
+    </div>
+    <hr>
+    <h1>directive(view)</h1>
+    <hello></hello>
+    <hr/>
+    <h1>scope</h1> rootScope已失效
+    <div ng-controller="ListCtrl">
+        <ol>
+            <li ng-repeat="name in names">
+                {{name}} - {{department}} !
+                <!-- department 不在ListCtrl作用域中，故无法显示 -->
+            </li>
+        </ol>
+    </div>
+    <hr/>
+    <h1>event的传播方向（向上和向下）</h1>
+    <div ng-controller="EventCtrl">
+        Root Scope
+        <tt>Parent Event Count:</tt> {{count}}
+        <ul>
+            <li ng-repeat="i in [1]" ng-controller="EventCtrl">
+                <button ng-click="$emit('MyEvent')">$emit('MyEvent')</button>
+                <button ng-click="$broadcast('MyEvent')">$broadcast('MyEvent')</button>
+                <br> Middle scope
+                <tt>Middle Event Count:</tt> {{count}}
+                <ul>
+                    <li ng-repeat="i in [1, 2]" ng-controller="EventCtrl">
+                        <tt>Child Event Count:</tt> {{count}}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="./js/angular.min.js"></script>
+<script src="./js/HelloAngular_MVC.js"></script>
+
+</html>

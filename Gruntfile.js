@@ -48,12 +48,13 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      all: ['./global.js']
+      all: ['./src/learnMVC/js/HelloAngular_MVC.js']
     },
     watch: {
       scripts: {
-        files: ['./src/plugin.js','./src/plugin2.js'],
-        tasks: ['concat','jshint','uglify']
+        files: ['./src/learnMVC/js/*.js'],
+        tasks: ['jshint']
+        // tasks: ['concat','jshint','uglify']
       },
       // sass: {
       //   files: ['./scss/style.scss'],
@@ -61,12 +62,13 @@ module.exports = function(grunt) {
       // },
       livereload: {
           options: {
-              livereload: '<%= connect.options.livereload %>'
+              livereload: '<%= connect.options.livereload %>' //监听connect中声明的端口
           },
-          files: [
-              'index.html',
-              // 'style.css',
-              'global.min.js'
+          files: [  //下面文件的改变就会实时刷新网页
+                    './src/learnMVC/*.html',
+                    './src/learnMVC/style/{,*/}*.css',
+                    './src/learnMVC/js/{,*/}*.js',
+                    './src/learnMVC/images/{,*/}*.{png,jpg}'
           ]
       }
     },
@@ -74,14 +76,14 @@ module.exports = function(grunt) {
       options: {
           port: 9000,
           open: true,
-          livereload: 35729,
+          livereload: 35729, //声明给watch监听的端口
           // Change this to '0.0.0.0' to access the server from outside
-          hostname: 'localhost'
+          hostname: 'localhost' // 本机域名
       },
       server: {
         options: {
           port: 9001,
-          base: './'
+          base: './src/learnMVC/'
         }
       }
     }
